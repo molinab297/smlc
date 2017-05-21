@@ -118,6 +118,7 @@ void AddMultipleRow(matrix_ptr matrix, int num_cols, int row_receiver, int row_m
  * -> RETURNS: A determinant multiplier. This value needs to be passed into
  *             Determinant(matrix_ptr matrix, int num_rows, int num_cols, double determinant_multiplier)
  *             in order for the correct value to be calculated.
+ *
  *    NOTE: If finding the determinant of the matrix is not of interest, simply
  *          call this function without assigning it to a variable.
  ************************************************************************/

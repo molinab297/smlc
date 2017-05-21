@@ -3,7 +3,7 @@
 // License: GPL
 #include "matrix.h"
 
-void SwapRows(double **matrix, int num_cols, int rowA, int rowB){
+void SwapRows(matrix_ptr matrix, int num_cols, int rowA, int rowB){
     for(int i = 0; i < num_cols; i++){
         double temp = matrix[rowA][i];
         matrix[rowA][i] = matrix[rowB][i];
@@ -11,18 +11,18 @@ void SwapRows(double **matrix, int num_cols, int rowA, int rowB){
     }
 }
 
-void DivideRow(double **matrix, int num_cols, int row, double divisor){
+void DivideRow(matrix_ptr matrix, int num_cols, int row, double divisor){
     for(int i = 0; i < num_cols; i++)
         matrix[row][i] /= divisor; // Reduce row by dividing by a common divisor
 }
 
 
-void AddMultipleRow(double **matrix, int num_cols, int row_receiver, int row_multiple, double scalar){
+void AddMultipleRow(matrix_ptr matrix, int num_cols, int row_receiver, int row_multiple, double scalar){
     for (int col = 0; col < num_cols; col++)
         matrix[row_receiver][col] += scalar * matrix[row_multiple][col];
 }
 
-double Reduced_row_echelon_form(double **matrix, int num_rows, int num_cols) {
+double Reduced_row_echelon_form(matrix_ptr matrix, int num_rows, int num_cols) {
     int pivot = 0;
     // function keeps track of determinant multiplier in case user needs to calculate
     // determinant value.
@@ -52,7 +52,7 @@ double Reduced_row_echelon_form(double **matrix, int num_rows, int num_cols) {
     return determinant_multiplier;
 }
 
-void InitializeMatrix(double **matrix, int num_rows, int num_cols){
+void InitializeMatrix(matrix_ptr matrix, int num_rows, int num_cols){
     for(int i = 0; i < num_rows; i++){
         for(int j = 0; j < num_cols; j++){
             printf("Enter value for [%d,%d]: ", i, j);
@@ -62,20 +62,20 @@ void InitializeMatrix(double **matrix, int num_rows, int num_cols){
     }
 }
 
-double **NewMatrix(int num_rows, int num_cols){
-    double **matrix = (double**)malloc(num_rows*sizeof(double*));
+matrix_ptr NewMatrix(int num_rows, int num_cols){
+    matrix_ptr matrix = (double**)malloc(num_rows*sizeof(double*));
     for(int i = 0; i < num_rows; i++)
         matrix[i] = (double*)malloc(num_cols*sizeof(double));
     return matrix;
 }
 
-void FreeMatrix(double **matrix, int num_rows){
+void FreeMatrix(matrix_ptr matrix, int num_rows){
     for(int i = 0; i < num_rows; i++)
         free(matrix[i]);
     free(matrix);
 }
 
-void PrintMatrix(double **matrix, int num_rows, int num_cols){
+void PrintMatrix(matrix_ptr matrix, int num_rows, int num_cols){
     for(int i = 0;i < num_rows; i++){
         for(int j = 0; j < num_cols; j++)
             printf("%0.1f", matrix[i][j]);
@@ -83,12 +83,12 @@ void PrintMatrix(double **matrix, int num_rows, int num_cols){
     }
 }
 
-double **MultiplyMatrices(double **matrixA, int A_num_rows, int A_num_cols, double **matrixB, int B_num_rows, int B_num_cols){
+matrix_ptr MultiplyMatrices(matrix_ptr matrixA, int A_num_rows, int A_num_cols, matrix_ptr matrixB, int B_num_rows, int B_num_cols){
     // Makes sure dot product can be applied to the matrices
     if(A_num_cols != B_num_rows)
         return NULL;
 
-    double **result_matrix = NewMatrix(A_num_rows, B_num_cols);
+    matrix_ptr result_matrix = NewMatrix(A_num_rows, B_num_cols);
 
     for(int row = 0; row < A_num_rows; row++){
         for(int column = 0; column < B_num_cols; column++){
@@ -102,7 +102,7 @@ double **MultiplyMatrices(double **matrixA, int A_num_rows, int A_num_cols, doub
 }
 
 
-double **AddMatrices(double **matrixA, int A_num_rows, int A_num_cols, double **matrixB, int B_num_rows, int B_num_cols, int subtract){
+matrix_ptr AddMatrices(matrix_ptr matrixA, int A_num_rows, int A_num_cols, matrix_ptr matrixB, int B_num_rows, int B_num_cols, int subtract){
     // Makes sure matrices are same size before performing addition
     if(A_num_rows != B_num_rows || A_num_cols != B_num_cols)
         return NULL;
@@ -112,7 +112,7 @@ double **AddMatrices(double **matrixA, int A_num_rows, int A_num_cols, double **
     if(subtract == 1)
         subtraction_flag = -1;
 
-    double **result_matrix = NewMatrix(A_num_rows, A_num_cols);
+    matrix_ptr result_matrix = NewMatrix(A_num_rows, A_num_cols);
     for(int i = 0; i < A_num_rows; i++){
         for(int j = 0; j < A_num_cols; j++)
             result_matrix[i][j] = matrixA[i][j] + (subtraction_flag * matrixB[i][j]);
@@ -121,7 +121,7 @@ double **AddMatrices(double **matrixA, int A_num_rows, int A_num_cols, double **
 }
 
 
-double Determinant(double **matrix, int num_rows, int num_cols, double determinant_multiplier){
+double Determinant(matrix_ptr matrix, int num_rows, int num_cols, double determinant_multiplier){
     if(num_rows != num_cols) // make sure matrix is square
         return -1;
     int determinant = 1;
