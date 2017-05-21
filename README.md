@@ -1,4 +1,4 @@
-# smlc - A Simple Linear Algebra/Matrix Library written in C
+# smlc - A Simple Matrix Library written in C
 
 The intention behind this project is to create a very small, quick, and basic matrix library; and for that reason it is written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. 
 
