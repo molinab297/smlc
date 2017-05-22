@@ -97,7 +97,9 @@ void AddMultipleRow(matrix_ptr matrix, int row_receiver, int row_multiple, doubl
 /*************************************************************************
  * double Reduced_row_echelon_form(matrix_ptr matrix)
  *
- *  Converts a matrix to Reduced Row Echelon Form
+ *  Converts a matrix to Reduced Row Echelon Form. This function uses
+ *  3 helper functions (DivideRow(), AddMultipleRow, and SwapRows()) to
+ *  perform elementary row operations.
  *
  * -> PARAMETERS:
  *    matrix   - a pointer to a matrix structure
@@ -169,6 +171,66 @@ matrix_ptr AddMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B, int subtract_fl
  ************************************************************************/
 double Determinant(matrix_ptr matrix, double determinant_multiplier);
 
+/*************************************************************************
+ * void Transpose(matrix_ptr matrix_A)
+ *
+ *  Takes the transpose of a matrix. The transpose of a matrix is every value
+ *  within the matrix in index [i][j] swapped with [j][i].
+ *
+ * -> PARAMETERS:
+ *    matrix       - a pointer to a matrix structure
+ ************************************************************************/
+void Transpose(matrix_ptr matrix);
+
+/*************************************************************************
+ * void SwapValues(double *index_one, double *index_two)
+ *
+ *  Swaps values given two pointers to indicies in a 2d array. Note that
+ *  this function is a helper function to RotateMatrixClockwise and
+ *  RotateMatrixCounterClockwise. Although, this function can be used if
+ *  one wishes to swap two values in a 2d array (which would be unnecessary
+ *  because public access is already given to the 2d array).
+ *
+ * -> PARAMETERS:
+ *    index_one       - a pointer to an index in a 2d array
+ *    index_two       - a pointer to another index in a 2d array
+ ************************************************************************/
+void SwapValues(double *index_one, double *index_two);
+
+/*************************************************************************
+ * void SwapColumns(matrix_ptr matrix)
+ *
+ *  Interchanges values in columns within a matrix. (Like SwapValues(),
+ *  but the operation is performed on the entire column).
+ *
+ * -> PARAMETERS:
+ *    matrix       - a pointer to a matrix structure
+ ************************************************************************/
+void SwapColumns(matrix_ptr matrix);
+
+/*************************************************************************
+ * void RotateMatrixClockwise(matrix_ptr matrix)
+ *
+ *  Rotates an NxN matrix 90 degrees clockwise. The function achieves this
+ *  by first transposing the matrix (by calling Transpose()) and then by
+ *  interchanging columns (by calling SwapColumns()).
+ *
+ * -> PARAMETERS:
+ *    matrix      - a pointer to a matrix structure
+ ************************************************************************/
+void RotateMatrixClockwise(matrix_ptr matrix);
+
+/*************************************************************************
+ * RotateMatrixCounterClockwise(matrix_ptr matrix)
+ *
+ *  Rotates an NxN matrix 90 degrees counterclockwise. This performs the
+ *  same operations as RotateMatrixClockwise() except in reverse, i.e.,
+ *  interchange columns, then transpose.
+ *
+ * -> PARAMETERS:
+ *    matrix       - a pointer to a matrix structure
+ ************************************************************************/
+void RotateMatrixCounterClockwise(matrix_ptr matrix);
 
 
 #endif //MATRIX_H

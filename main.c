@@ -16,9 +16,15 @@ void InitializeMatrix(matrix_ptr matrix){
     }
 }
 
+
+
 int main()
 {
 
+    matrix_ptr matrix = NewMatrix(4,4);
+    InitializeMatrix(matrix);
+    RotateMatrixCounterClockwise(matrix);
+    PrintMatrix(matrix);
 
 
     return 0;

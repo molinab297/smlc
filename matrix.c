@@ -49,7 +49,7 @@ double Reduced_row_echelon_form(matrix_ptr matrix) {
 
         for (i = 0; i < matrix->num_rows; i++) {
             if (i != row)
-                AddMultipleRow(matrix,i,row,-matrix->index[i][pivot]);
+                AddMultipleRow(matrix,i,row,-matrix->index[i][pivot]); // Rule 3 of Properties of Row Operations for Determinants
         }
     }
     return determinant_multiplier;
@@ -85,7 +85,7 @@ void PrintMatrix(matrix_ptr matrix){
 matrix_ptr MultiplyMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B){
     // Makes sure dot product can be applied to the matrices
     if(matrix_A->num_cols != matrix_B->num_rows) {
-        fprintf(stderr, "%s", "Error - Need a NxN matrix to perform matrix multiplication");
+        fprintf(stderr, "%s", "Error - Need an NxN matrix to perform matrix multiplication");
         return NULL;
     }
 
@@ -106,7 +106,7 @@ matrix_ptr MultiplyMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B){
 matrix_ptr AddMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B, int subtract_flag){
     // Makes sure matrices are same size before performing addition
     if(matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols) {
-        fprintf(stderr, "%s", "Error - Need a NxN matrix to perform matrix addition");
+        fprintf(stderr, "%s", "Error - Need an NxN matrix to perform matrix addition");
         return NULL;
     }
 
@@ -127,11 +127,52 @@ matrix_ptr AddMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B, int subtract_fl
 
 double Determinant(matrix_ptr matrix, double determinant_multiplier){
     if(matrix->num_rows != matrix->num_cols) { // make sure matrix is square
-        fprintf(stderr, "%s", "Error - Need a NxN matrix to calculate determinant");
+        fprintf(stderr, "%s", "Error - Need an NxN matrix to calculate determinant");
         return -1;
     }
     int determinant = 1;
     for(int i = 0; i < matrix->num_rows; i++) // multiply diagonal
         determinant *= matrix->index[i][i];
     return determinant * determinant_multiplier; // scale determinant by value from performing elementary row operations
+}
+
+void Transpose(matrix_ptr matrix){
+    // Transpose NxN matrix
+    for(int row = 0; row < matrix->num_rows; row++){
+        for(int col = row; col < matrix->num_cols; col++)
+            SwapValues(*(matrix->index+row)+col, *(matrix->index+col)+row);
+    }
+}
+
+void SwapColumns(matrix_ptr matrix){
+    int k = matrix->num_cols-1;
+    for(int i = 0; i < matrix->num_cols/2; i++){
+        for(int j = 0; j < matrix->num_rows; j++)
+            SwapValues(*(matrix->index+j)+i, *(matrix->index+j)+k);
+        k--;
+    }
+}
+
+void SwapValues(double *index_one, double *index_two){
+    double temp = *index_one;
+    *index_one  = *index_two;
+    *index_two  = temp;
+}
+
+void RotateMatrixClockwise(matrix_ptr matrix){
+    if(matrix->num_rows != matrix->num_cols)
+        fprintf(stderr, "%s", "Error - Need an Nxn matrix to rotate");
+    else{
+        Transpose(matrix);
+        SwapColumns(matrix);
+    }
+}
+
+void RotateMatrixCounterClockwise(matrix_ptr matrix){
+    if(matrix->num_rows != matrix->num_cols)
+        fprintf(stderr, "%s", "Error - Need an Nxn matrix to rotate");
+    else{
+        SwapColumns(matrix);
+        Transpose(matrix);
+    }
 }
