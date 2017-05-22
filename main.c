@@ -17,7 +17,6 @@ void InitializeMatrix(matrix_ptr matrix){
 }
 
 
-
 int main()
 {
 
