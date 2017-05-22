@@ -6,8 +6,8 @@ This library will include common and well known matrix algorithms such as:
   - basic matrix addition, subtraction, and multiplication
   - rotating and transposing matrices
   - calculating determinants of matrices
-  - converting matrices to reduced row echelon form
-  - solving systems of equations as matrices 
+  - converting matrices to reduced row echelon form (using LU Decomposition) 
+  - solving systems of equations as matrices (using backward substitution)
   - determining linear independence/dependence 
   - calculating eigenvectors & eigenvalues
   
