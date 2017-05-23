@@ -15,7 +15,10 @@ The intention behind this project is to create a very small, quick, and basic ma
   - LU Decomposition (Guassian Elimination/Reduced row)
   - Cholesky Decomposition
 
-### Cholesky Decomposition 
+## Future Decomposition Algorithms / Matrix operations: 
+  ???
+  
+### Facts about the Cholesky Decomposition Algorithm  
 When it is applicable, the Cholesky decomposition is roughly twice as efficient as the LU decomposition for solving systems of linear equations.
 
 Below is an animation of the Cholesky decomposition in-place algorithm on a 5×5 matrix. Access pattern are in white and writing pattern are in yellow.
