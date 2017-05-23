@@ -15,12 +15,11 @@ void InitializeMatrix(matrix_ptr matrix){
     }
 }
 
-
 int main()
 {
 
-    matrix_ptr matrix_1 = NewMatrix(4,4);
-    matrix_ptr matrix_2 = NewMatrix(4,4);
+    matrix_ptr matrix_1 = NewMatrix(3,3);
+    matrix_ptr matrix_2 = NewMatrix(3,3);
     InitializeMatrix(matrix_1);
     Cholesky(matrix_1,matrix_2);
     PrintMatrix(matrix_2);

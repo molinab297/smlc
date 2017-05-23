@@ -114,18 +114,24 @@ void AddMultipleRow(matrix_ptr matrix, int row_receiver, int row_multiple, doubl
  ************************************************************************/
 double Reduced_row_echelon_form(matrix_ptr matrix);
 
-
 /*************************************************************************
- * matrix_ptr cholesky(matrix_ptr matrix)
+ * void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix)
  *
- *
+ *   Similary to LU decomposition, The Cholesky decomposition is another
+ *   method to convert a matrix to reduced row echelon form. Where applicable,
+ *   the Cholesky decomposition is roughly twice as efficient as the LU
+ *   decomposition for solving systems of linear equations.
  *
  * -> PARAMETERS:
- *    matrix   - a pointer to a matrix structure
+ *    original_matrix  - a pointer to the original matrix structure
+ *    new_matrix       - a pointer to the matrix structure which will
+ *                       receive the Cholesky factor
  *
  * -> RETURNS:
  *
- *    NOTE:
+ *    NOTE: The parameter original_matrix must be a Hermitian, positive-definite
+ *    matrix (Symmetric and real for all values), in order for the algorithm
+ *    to perform as designed.
  ************************************************************************/
 void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix);
 

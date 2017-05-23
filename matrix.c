@@ -175,6 +175,8 @@ double Reduced_row_echelon_form(matrix_ptr matrix) {
 
 void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix){
 
+    if(original_matrix == NULL || new_matrix == NULL)
+        return;
     // loop over each row
     for(int i = 0; i < original_matrix->num_rows; i++){
         double temp_for_diag = 0;
@@ -182,6 +184,7 @@ void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix){
         for(int j = 0; j < i; j++){
             double temp_for_non_diag = 0.0;
             for(int k = 0; k < j; k++)
+                // calculate non-diagonal value
                 temp_for_non_diag += (new_matrix->index[i][k] * new_matrix->index[j][k]);
             new_matrix->index[i][j] = (1.0/new_matrix->index[j][j])*(original_matrix->index[i][j] - temp_for_non_diag);
             temp_for_diag += (pow(new_matrix->index[i][j], 2.0));
@@ -216,7 +219,7 @@ void AddMultipleRow(matrix_ptr matrix, int row_receiver, int row_multiple, doubl
 
 
 void SwapColumns(matrix_ptr matrix){
-    int column_right = matrix->num_cols-1;
+    size_t column_right = matrix->num_cols-1;
     for(int column_left = 0; column_left < matrix->num_cols/2; column_left++){
         for(int row = 0; row < matrix->num_rows; row++)
             SwapValues(*(matrix->index+row)+column_left, *(matrix->index+row)+column_right);
