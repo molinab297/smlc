@@ -9,11 +9,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct{
     double **index; // pointer to 2d matrix
-    int num_rows;
-    int num_cols;
+    size_t num_rows;
+    size_t num_cols;
 }Matrix;
 
 typedef Matrix* matrix_ptr;
@@ -29,7 +30,7 @@ typedef Matrix* matrix_ptr;
  *
  * -> RETURNS: a pointer to a matrix
  ************************************************************************/
-matrix_ptr NewMatrix(int num_rows, int num_cols);
+matrix_ptr NewMatrix(size_t num_rows, size_t num_cols);
 
 /*************************************************************************
  * void InitializeMatrix(matrix_ptr *matrix)
@@ -112,6 +113,21 @@ void AddMultipleRow(matrix_ptr matrix, int row_receiver, int row_multiple, doubl
  *          call this function without assigning it to a variable.
  ************************************************************************/
 double Reduced_row_echelon_form(matrix_ptr matrix);
+
+
+/*************************************************************************
+ * matrix_ptr cholesky(matrix_ptr matrix)
+ *
+ *
+ *
+ * -> PARAMETERS:
+ *    matrix   - a pointer to a matrix structure
+ *
+ * -> RETURNS:
+ *
+ *    NOTE:
+ ************************************************************************/
+void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix);
 
 /*************************************************************************
  * matrix_ptr MultiplyMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B)

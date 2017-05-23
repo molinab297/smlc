@@ -9,29 +9,38 @@
 /*******************************************************
  *     Matrix Instantiation, Deletion, & Printing
  *******************************************************/
-matrix_ptr NewMatrix(int num_rows, int num_cols){
-    matrix_ptr newMatrix;
-    newMatrix = malloc(sizeof(matrix_ptr));
+matrix_ptr NewMatrix(size_t num_rows, size_t num_cols){
+
+    // Allocate memory for matrix struct
+    matrix_ptr newMatrix = (matrix_ptr)malloc(sizeof(Matrix));
     newMatrix->num_rows = num_rows;
     newMatrix->num_cols = num_cols;
-    newMatrix->index = (double**)malloc(newMatrix->num_rows*sizeof(double*));
+
+    // Allocate memory for 2d array of type double within matrix struct
+    newMatrix->index = (double**)calloc(newMatrix->num_rows, sizeof(double*));
     for(int i = 0; i < newMatrix->num_rows; i++)
-        newMatrix->index[i] = (double*)malloc(newMatrix->num_cols*sizeof(double));
+        newMatrix->index[i] = (double*)calloc(newMatrix->num_cols, sizeof(double));
     return newMatrix;
 }
 
 void FreeMatrix(matrix_ptr *matrix){
-    for(int i = 0; i < (*matrix)->num_rows; i++)
-        free((*matrix)->index[i]);
-    free((*matrix)->index);
-    free(*matrix);
+    if(matrix != NULL){
+        // free memory from 2d array within matrix struct
+        for(int i = 0; i < (*matrix)->num_rows; i++)
+            free((*matrix)->index[i]);
+        free((*matrix)->index);
+        // free memory from matrix struct
+        free(*matrix);
+    }
 }
 
 void PrintMatrix(matrix_ptr matrix){
-    for(int i = 0;i < matrix->num_rows; i++){
-        for(int j = 0; j < matrix->num_cols; j++)
-            printf("%0.1f ", matrix->index[i][j]);
-        printf("\n");
+    if(matrix != NULL){
+        for(int i = 0;i < matrix->num_rows; i++){
+            for(int j = 0; j < matrix->num_cols; j++)
+                printf("%0.1f ", matrix->index[i][j]);
+            printf("\n");
+        }
     }
 }
 
@@ -132,7 +141,7 @@ double Determinant(matrix_ptr matrix, double determinant_multiplier){
 
 
 /*******************************************************
- *          Matrix Reduced Row Echelon Form
+ *         Matrix Decomposition Algorithms
  *******************************************************/
 double Reduced_row_echelon_form(matrix_ptr matrix) {
     int pivot = 0;
@@ -162,6 +171,24 @@ double Reduced_row_echelon_form(matrix_ptr matrix) {
         }
     }
     return determinant_multiplier;
+}
+
+void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix){
+
+    // loop over each row
+    for(int i = 0; i < original_matrix->num_rows; i++){
+        double temp_for_diag = 0;
+        // calculate non-diagonal value
+        for(int j = 0; j < i; j++){
+            double temp_for_non_diag = 0.0;
+            for(int k = 0; k < j; k++)
+                temp_for_non_diag += (new_matrix->index[i][k] * new_matrix->index[j][k]);
+            new_matrix->index[i][j] = (1.0/new_matrix->index[j][j])*(original_matrix->index[i][j] - temp_for_non_diag);
+            temp_for_diag += (pow(new_matrix->index[i][j], 2.0));
+        }
+        // calculate diagonal value
+        new_matrix->index[i][i] = sqrt(original_matrix->index[i][i] - temp_for_diag);
+    }
 }
 
 
