@@ -15,5 +15,5 @@ This library will include common and well known matrix algorithms such as:
   
   
   
- https://cloud.githubusercontent.com/assets/10769110/26377688/3177e988-3fc6-11e7-81b0-169de837619d.gif
+ ![Alt text](https://cloud.githubusercontent.com/assets/10769110/26377688/3177e988-3fc6-11e7-81b0-169de837619d.gif)
   
