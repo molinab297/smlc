@@ -12,7 +12,7 @@ The intention behind this project is to create a very small, quick, and basic ma
   - calculating eigenvectors & eigenvalues
   
 ## Supported Decomposition Algorithms ATM:   
-  - Guassian Elimination (Reduced row)
+  - LU Decomposition (Guassian Elimination/Reduced row)
   - Cholesky Decomposition
 
 ### Cholesky Decomposition 
