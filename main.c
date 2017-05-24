@@ -18,10 +18,11 @@ void InitializeMatrix(matrix_ptr matrix){
 int main()
 {
 
-    matrix_ptr matrix_1 = NewMatrix(3,3);
-    InitializeMatrix(matrix_1);
-    if(isLinearIndependent(matrix_1))
-        printf("%s", "Independent");
+    matrix_ptr matrix = NewMatrix(3,3);
+    InitializeMatrix(matrix);
+    ReducedRowEchelonForm(matrix);
+    if(isLinearIndependent(matrix))
+        printf("%s", "Linearly independent");
 
 
     return 0;

@@ -166,7 +166,7 @@ double ReducedRowEchelonForm(matrix_ptr matrix) {
             }
         }
         SwapRows(matrix, i, row);
-        determinant_multiplier *= (-1*matrix->index[row][pivot]); // Apply Rule 1 and Rule 2 of Properties of Row Operations for Determinants
+        determinant_multiplier *= matrix->index[row][pivot]; // Apply Rule 1 and Rule 2 of Properties of Row Operations for Determinants
         DivideRow(matrix, row, matrix->index[row][pivot]);
 
         for (i = 0; i < matrix->num_rows; i++) {
@@ -241,11 +241,12 @@ void SwapValues(double *index_one, double *index_two){
 /*******************************************************
  *           Miscellaneous Matrix operations
  *******************************************************/
-int isLinearIndependent(matrix_ptr matrix){
+int IsLinearIndependent(matrix_ptr matrix){
     if(!matrix)
         return -1;
     double multiplier = ReducedRowEchelonForm(matrix);
-    if(Determinant(matrix,multiplier) == 0)
+    // Linear independent matrices have a non-zero determinant
+    if(Determinant(matrix,multiplier) != 0)
         return 1;
     return 0;
 }

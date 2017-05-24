@@ -254,7 +254,19 @@ void RotateMatrixClockwise(matrix_ptr matrix);
  ************************************************************************/
 void RotateMatrixCounterClockwise(matrix_ptr matrix);
 
-int isLinearIndependent(matrix_ptr matrix);
+
+/*************************************************************************
+ * int IsLinearIndependent(matrix_ptr matrix)
+ *
+ *  Determines if a matrix is linearly independent. A matrix is said to be
+ *  independent if it's determinant is not equal to 0.
+ *
+ * -> PARAMETERS:
+ *    matrix       - a pointer to a matrix structure
+ *
+ * -> RETURNS: 0 for false or 1 for true
+ ************************************************************************/
+int IsLinearIndependent(matrix_ptr matrix);
 
 
 #endif //MATRIX_H
