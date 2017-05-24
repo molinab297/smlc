@@ -19,12 +19,9 @@ int main()
 {
 
     matrix_ptr matrix_1 = NewMatrix(3,3);
-    matrix_ptr matrix_2 = NewMatrix(3,3);
     InitializeMatrix(matrix_1);
-    Cholesky(matrix_1,matrix_2);
-    PrintMatrix(matrix_2);
-    FreeMatrix(&matrix_1);
-    FreeMatrix(&matrix_2);
+    if(isLinearIndependent(matrix_1))
+        printf("%s", "Independent");
 
 
     return 0;

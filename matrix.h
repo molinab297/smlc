@@ -20,13 +20,13 @@ typedef struct{
 typedef Matrix* matrix_ptr;
 
 /*************************************************************************
- * matrix_ptr NewMatrix(int num_rows, int num_cols)
+ * matrix_ptr NewMatrix(size_t num_rows, size_t num_cols)
  *
  * Allocates memory for a 2D matrix and returns a pointer to the first index
  *
  * -> PARAMETERS:
- *    num_rows - number of rows in the matrix
- *    num_cols - number of columns in the matrix
+ *    num_rows - number of rows in the matrix (must be a positive int)
+ *    num_cols - number of columns in the matrix (must be a positive int)
  *
  * -> RETURNS: a pointer to a matrix
  ************************************************************************/
@@ -112,7 +112,7 @@ void AddMultipleRow(matrix_ptr matrix, int row_receiver, int row_multiple, doubl
  *    NOTE: If finding the determinant of the matrix is not of interest, simply
  *          call this function without assigning it to a variable.
  ************************************************************************/
-double Reduced_row_echelon_form(matrix_ptr matrix);
+double ReducedRowEchelonForm(matrix_ptr matrix);
 
 /*************************************************************************
  * void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix)
@@ -253,6 +253,8 @@ void RotateMatrixClockwise(matrix_ptr matrix);
  *    matrix       - a pointer to a matrix structure
  ************************************************************************/
 void RotateMatrixCounterClockwise(matrix_ptr matrix);
+
+int isLinearIndependent(matrix_ptr matrix);
 
 
 #endif //MATRIX_H
