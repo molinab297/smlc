@@ -9,10 +9,10 @@
 /*******************************************************
  *     Matrix Instantiation, Deletion, & Printing
  *******************************************************/
-matrix_ptr NewMatrix(size_t num_rows, size_t num_cols){
+Matrix NewMatrix(size_t num_rows, size_t num_cols){
 
     // Allocate memory for matrix struct
-    matrix_ptr newMatrix = (matrix_ptr)malloc(sizeof(Matrix));
+    Matrix newMatrix = (Matrix)malloc(sizeof(Matrix));
     newMatrix->num_rows = num_rows;
     newMatrix->num_cols = num_cols;
 
@@ -23,7 +23,7 @@ matrix_ptr NewMatrix(size_t num_rows, size_t num_cols){
     return newMatrix;
 }
 
-void FreeMatrix(matrix_ptr *matrix){
+void FreeMatrix(Matrix *matrix){
     if(matrix){
         // free memory from 2d array within matrix struct
         for(int i = 0; i < (*matrix)->num_rows; i++)
@@ -34,7 +34,7 @@ void FreeMatrix(matrix_ptr *matrix){
     }
 }
 
-void PrintMatrix(matrix_ptr matrix){
+void PrintMatrix(Matrix matrix){
     if(matrix){
         for(int i = 0;i < matrix->num_rows; i++){
             for(int j = 0; j < matrix->num_cols; j++)
@@ -48,14 +48,14 @@ void PrintMatrix(matrix_ptr matrix){
 /*******************************************************
  *           Matrix Addition & Deletion
  *******************************************************/
-matrix_ptr MultiplyMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B){
+Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
     // Makes sure matrices exist and dot product can be applied to the matrices
     if(!matrix_A || !matrix_B || matrix_A->num_cols != matrix_B->num_rows) {
         fprintf(stderr, "%s", "Error - Need an NxN matrix to perform matrix multiplication");
         return NULL;
     }
 
-    matrix_ptr result_matrix = NewMatrix(matrix_A->num_rows, matrix_B->num_cols);
+    Matrix result_matrix = NewMatrix(matrix_A->num_rows, matrix_B->num_cols);
 
     // Apply Dot Product
     for(int row = 0; row < matrix_A->num_rows; row++){
@@ -70,7 +70,7 @@ matrix_ptr MultiplyMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B){
 }
 
 
-matrix_ptr AddMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B, int subtract_flag){
+Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag){
     // Makes sure matrices exists and are same size before performing addition
     if(!matrix_A || !matrix_B || matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols) {
         fprintf(stderr, "%s", "Error - Need an NxN matrix to perform matrix addition");
@@ -82,7 +82,7 @@ matrix_ptr AddMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B, int subtract_fl
     if(subtract_flag == 1)
         subtraction_flag = -1;
 
-    matrix_ptr result_matrix = NewMatrix(matrix_A->num_rows, matrix_A->num_cols);
+    Matrix result_matrix = NewMatrix(matrix_A->num_rows, matrix_A->num_cols);
 
     for(int i = 0; i < matrix_A->num_rows; i++){
         for(int j = 0; j < matrix_A->num_cols; j++)
@@ -95,7 +95,7 @@ matrix_ptr AddMatrices(matrix_ptr matrix_A, matrix_ptr matrix_B, int subtract_fl
 /*******************************************************
  *          Matrix Transposing & Rotation
  *******************************************************/
-void RotateMatrixClockwise(matrix_ptr matrix){
+void RotateMatrixClockwise(Matrix matrix){
     // make sure matrix exists and is square
     if(!matrix || matrix->num_rows != matrix->num_cols)
         fprintf(stderr, "%s", "Error - Need an Nxn matrix to rotate");
@@ -105,7 +105,7 @@ void RotateMatrixClockwise(matrix_ptr matrix){
     }
 }
 
-void RotateMatrixCounterClockwise(matrix_ptr matrix){
+void RotateMatrixCounterClockwise(Matrix matrix){
     // make sure matrix exists and is square
     if(!matrix || matrix->num_rows != matrix->num_cols)
         fprintf(stderr, "%s", "Error - Need an Nxn matrix to rotate");
@@ -115,7 +115,7 @@ void RotateMatrixCounterClockwise(matrix_ptr matrix){
     }
 }
 
-void Transpose(matrix_ptr matrix){
+void Transpose(Matrix matrix){
     if(!matrix)
         return;
     // Transpose NxN matrix
@@ -129,7 +129,7 @@ void Transpose(matrix_ptr matrix){
 /*******************************************************
  *                Matrix Determinants
  *******************************************************/
-double Determinant(matrix_ptr matrix, double determinant_multiplier){
+double Determinant(Matrix matrix, double determinant_multiplier){
     // make sure matrix is square
     if(matrix->num_rows != matrix->num_cols) {
         fprintf(stderr, "%s", "Error - Need an NxN matrix to calculate determinant");
@@ -145,7 +145,7 @@ double Determinant(matrix_ptr matrix, double determinant_multiplier){
 /*******************************************************
  *         Matrix Decomposition Algorithms
  *******************************************************/
-double ReducedRowEchelonForm(matrix_ptr matrix) {
+double ReducedRowEchelonForm(Matrix matrix) {
     if(!matrix)
         return -1;
     int pivot = 0;
@@ -177,7 +177,7 @@ double ReducedRowEchelonForm(matrix_ptr matrix) {
     return determinant_multiplier;
 }
 
-void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix){
+void Cholesky(Matrix original_matrix, Matrix new_matrix){
 
     if(!original_matrix || !new_matrix)
         return;
@@ -202,7 +202,7 @@ void Cholesky(matrix_ptr original_matrix, matrix_ptr new_matrix){
 /*******************************************************
  *             Matrix Helper Functions
  *******************************************************/
-void SwapRows(matrix_ptr matrix, int rowA, int rowB){
+void SwapRows(Matrix matrix, int rowA, int rowB){
     for(int i = 0; i < matrix->num_cols; i++){
         double temp = matrix->index[rowA][i];
         matrix->index[rowA][i] = matrix->index[rowB][i];
@@ -210,19 +210,19 @@ void SwapRows(matrix_ptr matrix, int rowA, int rowB){
     }
 }
 
-void DivideRow(matrix_ptr matrix, int row, double divisor){
+void DivideRow(Matrix matrix, int row, double divisor){
     for(int i = 0; i < matrix->num_cols; i++)
         matrix->index[row][i] /= divisor; // Reduce row by dividing by a common divisor
 }
 
 
-void AddMultipleRow(matrix_ptr matrix, int row_receiver, int row_multiple, double scalar){
+void AddMultipleRow(Matrix matrix, int row_receiver, int row_multiple, double scalar){
     for (int col = 0; col < matrix->num_cols; col++)
         matrix->index[row_receiver][col] += scalar * matrix->index[row_multiple][col];
 }
 
 
-void SwapColumns(matrix_ptr matrix){
+void SwapColumns(Matrix matrix){
     size_t column_right = matrix->num_cols-1;
     for(int column_left = 0; column_left < matrix->num_cols/2; column_left++){
         for(int row = 0; row < matrix->num_rows; row++)
@@ -241,12 +241,15 @@ void SwapValues(double *index_one, double *index_two){
 /*******************************************************
  *           Miscellaneous Matrix operations
  *******************************************************/
-int IsLinearIndependent(matrix_ptr matrix){
+int IsLinearIndependent(Matrix matrix){
     if(!matrix)
         return -1;
     double multiplier = ReducedRowEchelonForm(matrix);
     // Linear independent matrices have a non-zero determinant
-    if(Determinant(matrix,multiplier) != 0)
+    double determinant = Determinant(matrix,multiplier);
+    if(determinant != 0) {
+        printf("\n%lf", determinant);
         return 1;
+    }
     return 0;
 }
