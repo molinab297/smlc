@@ -12,7 +12,7 @@
 Matrix NewMatrix(size_t num_rows, size_t num_cols){
 
     // Allocate memory for matrix struct
-    Matrix newMatrix = (Matrix)malloc(sizeof(Matrix));
+    Matrix newMatrix = (Matrix)malloc(sizeof(matrix_struct));
     newMatrix->num_rows = num_rows;
     newMatrix->num_cols = num_cols;
 
@@ -24,7 +24,7 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols){
 }
 
 void FreeMatrix(Matrix *matrix){
-    if(matrix){
+    if(!isEmpty(*matrix)){
         // free memory from 2d array within matrix struct
         for(int i = 0; i < (*matrix)->num_rows; i++)
             free((*matrix)->index[i]);
@@ -33,17 +33,6 @@ void FreeMatrix(Matrix *matrix){
         free(*matrix);
     }
 }
-
-void PrintMatrix(Matrix matrix){
-    if(!isEmpty(matrix)){
-        for(int i = 0;i < matrix->num_rows; i++){
-            for(int j = 0; j < matrix->num_cols; j++)
-                printf("%0.1f ", matrix->index[i][j]);
-            printf("\n");
-        }
-    }
-}
-
 
 /*******************************************************
  *           Matrix Addition & Deletion
@@ -258,30 +247,49 @@ int IsLinearIndependent(Matrix matrix){
     double multiplier = ReducedRowEchelonForm(matrix);
     // Linear independent matrices have a non-zero determinant
     double determinant = Determinant(matrix,multiplier);
-    if(determinant != 0) {
-        printf("\n%lf", determinant);
+    if(determinant != 0)
         return 1;
-    }
     return 0;
 }
 
 Matrix SolveSystem(Matrix matrix){
+
     if(isEmpty(matrix))
         return NULL;
 
+    // Make sure the matrix is augmented with a constant column vector
+    if(matrix->num_cols < matrix->num_rows){
+        fprintf(stderr,"%s", "Must augment matrix with a constant vector");
+        return NULL;
+    }
+
     // Reduce system before solving for unknowns
     ReducedRowEchelonForm(matrix);
-    Matrix result_matrix = NewMatrix(matrix->num_rows-1,1);
+    Matrix result_matrix = NewMatrix(matrix->num_rows,1);
 
     // Use back-substitution to solve reduced matrix
     for(int i = matrix->num_rows-1; i >= 0; i--){
 
-        result_matrix->index[i][0] = matrix->index[i][matrix->num_rows-1];
+        // if the unknown variable has a non-zero coefficient, then a value for it must exist
+        if(matrix->index[i][i] != 0) {
+            result_matrix->index[i][0] = matrix->index[i][matrix->num_cols-1];
 
-        for(int j = i+1; j < matrix->num_rows; j++)
-            result_matrix->index[i][0] = matrix->index[i][j] * result_matrix->index[j][0];
+            for(int j = i+1; j < matrix->num_rows; j++)
+                result_matrix->index[i][0] = matrix->index[i][j] * result_matrix->index[j][0];
 
-        result_matrix->index[i][0] /= matrix->index[i][i];
+            result_matrix->index[i][0] /= matrix->index[i][i]; // cause of nan
+        }
+        // The matrix has no solutions if there is a zero row and then a non-zero value in
+        // the constant vector
+        else if(matrix->index[i][i] == 0 && matrix->index[i][matrix->num_cols-1] != 0){
+            fprintf(stderr,"%s","No solutions");
+            return NULL;
+        }
+        // The matrix has infinitely many solutions if a zero row exists
+        else{
+            fprintf(stderr,"%s","Infinitely many solutions");
+            return NULL;
+        }
     }
 
     return result_matrix;

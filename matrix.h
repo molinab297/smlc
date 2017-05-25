@@ -46,16 +46,6 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols);
 void FreeMatrix(Matrix *matrix);
 
 /*************************************************************************
- * void PrintMatrix(Matrix matrix)
- *
- * Prints the contents of a 2D array
- *
- * -> PARAMETERS:
- *    matrix   - a matrix structure
- ************************************************************************/
-void PrintMatrix(Matrix matrix);
-
-/*************************************************************************
  * void SwapRows(Matrix matrix, int rowA, int rowB)
  *
  *  Swaps one row with another. This operation is typically performed when
@@ -114,7 +104,6 @@ void AddMultipleRow(Matrix matrix, int row_receiver, int row_multiple, double sc
  ************************************************************************/
 double ReducedRowEchelonForm(Matrix matrix);
 
-
 /*************************************************************************
  * Matrix SolveSystem(Matrix matrix)
  *
@@ -127,6 +116,11 @@ double ReducedRowEchelonForm(Matrix matrix);
  *
  * -> RETURNS: a matrix structure which holds the solutions to the system
  *             of linear equations.
+ *
+ *    NOTE: This function will return a NULL pointer if either the system
+ *    has no solutions (a zero row and then a value in the constant vector)
+ *    or infinitely many solutions (a zero row). It will also output an
+ *    error message.
  ************************************************************************/
 Matrix SolveSystem(Matrix matrix);
 
