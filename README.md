@@ -8,11 +8,11 @@ For example, given this system of equations:
 
 we could simply solve this system by writing the following code
 
-'''c++
+```c++
 Matrix matrix = NewMatrix(3,4);
 FillMatrix(matrix);
 PrintMatrix(SolveSystem(matrix));
-'''
+```
 
 Output:
 
