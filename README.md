@@ -4,7 +4,7 @@ A very small and basic matrix library written in C. This library is purely writt
 
 For example, given this system of equations:
 
-*insert pic here*
+![Alt text](https://cloud.githubusercontent.com/assets/10769110/26473871/a532fc6c-4162-11e7-929a-f7f463d9e15e.gif)
 
 we could simply solve this system by writing the following code
 
