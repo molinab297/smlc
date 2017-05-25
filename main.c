@@ -18,10 +18,11 @@ void InitializeMatrix(Matrix matrix){
 int main()
 {
 
-    Matrix matrix = NewMatrix(4,4);
+    Matrix matrix = NewMatrix(5,5);
     InitializeMatrix(matrix);
     if(IsLinearIndependent(matrix))
         printf("\n%s", "Linearly independent");
+
 
 
     return 0;

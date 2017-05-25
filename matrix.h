@@ -28,7 +28,7 @@ typedef matrix_struct* Matrix;
  *    num_rows - number of rows in the matrix (must be a positive int)
  *    num_cols - number of columns in the matrix (must be a positive int)
  *
- * -> RETURNS: a pointer to a matrix
+ * -> RETURNS: a matrix structure
  ************************************************************************/
 Matrix NewMatrix(size_t num_rows, size_t num_cols);
 
@@ -41,7 +41,7 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols);
  * Not doing so can result in memory leaks.
  *
  * -> PARAMETERS:
- *    matrix   - a pointer to a pointer to a matrix structure
+ *    matrix   - a pointer to a matrix structure
  ************************************************************************/
 void FreeMatrix(Matrix *matrix);
 
@@ -51,7 +51,7 @@ void FreeMatrix(Matrix *matrix);
  * Prints the contents of a 2D array
  *
  * -> PARAMETERS:
- *    matrix   - a pointer to a matrix structure
+ *    matrix   - a matrix structure
  ************************************************************************/
 void PrintMatrix(Matrix matrix);
 
@@ -63,7 +63,7 @@ void PrintMatrix(Matrix matrix);
  *  more zeros at the bottom of the matrix).
  *
  * -> PARAMETERS:
- *    matrix   - a pointer to a matrix structure
+ *    matrix   - a matrix structure
  *    rowA     - A row that will be swapped with row B
  *    rowB     - A row that will be swapped with row A
  ************************************************************************/
@@ -76,7 +76,7 @@ void SwapRows(Matrix matrix, int rowA, int rowB);
  *  performed to reduce rows that share a common divisor.
  *
  * -> PARAMETERS:
- *    matrix   - a pointer to a matrix structure
+ *    matrix   - a matrix structure
  *    row      - A row that will be divided by divisor
  *    divisor  - number to divide each value in the specified row of the matrix
  ************************************************************************/
@@ -88,7 +88,7 @@ void DivideRow(Matrix matrix, int row, double divisor);
  *  Adds the multiple of one row to another row
  *
  * -> PARAMETERS:
- *    matrix       - a pointer to a matrix structure
+ *    matrix       - a matrix structure
  *    row_receiver - row that is being modified by (scalar * row_multiple)
  *    row_multiple - row that is being added to row_receiver
  *    scalar       - number that scales each element in a row (row_multiple)
@@ -103,7 +103,7 @@ void AddMultipleRow(Matrix matrix, int row_receiver, int row_multiple, double sc
  *  perform elementary row operations.
  *
  * -> PARAMETERS:
- *    matrix   - a pointer to a matrix structure
+ *    matrix   - a matrix structure
  *
  * -> RETURNS: A determinant multiplier. This value needs to be passed into
  *             Determinant(Matrix matrix, double determinant_multiplier)
@@ -114,6 +114,22 @@ void AddMultipleRow(Matrix matrix, int row_receiver, int row_multiple, double sc
  ************************************************************************/
 double ReducedRowEchelonForm(Matrix matrix);
 
+
+/*************************************************************************
+ * Matrix SolveSystem(Matrix matrix)
+ *
+ *  Solves a system of linear equations (a matrix) by converting the system
+ *  to reduced row echelon form (calls ReducedRowEchelonForm()) and then
+ *  performs back-substitution to solve for each unknown variable.
+ *
+ * -> PARAMETERS:
+ *    matrix   - a matrix structure
+ *
+ * -> RETURNS: a matrix structure which holds the solutions to the system
+ *             of linear equations.
+ ************************************************************************/
+Matrix SolveSystem(Matrix matrix);
+
 /*************************************************************************
  * void Cholesky(Matrix original_matrix, Matrix new_matrix)
  *
@@ -123,9 +139,9 @@ double ReducedRowEchelonForm(Matrix matrix);
  *   decomposition for solving systems of linear equations.
  *
  * -> PARAMETERS:
- *    original_matrix  - a pointer to the original matrix structure
- *    new_matrix       - a pointer to the matrix structure which will
- *                       receive the Cholesky factor
+ *    original_matrix  - the original matrix structure
+ *    new_matrix       - the new matrix structure which will receive the
+ *                       Cholesky factor
  *
  * -> RETURNS:
  *
@@ -138,14 +154,15 @@ void Cholesky(Matrix original_matrix, Matrix new_matrix);
 /*************************************************************************
  * Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B)
  *
- *  Calculates and returns a matrix as the result of the product of two matrices
+ *  Calculates and returns a matrix as the result of the product of two
+ *  matrices
  *
  * -> PARAMETERS:
  *    matrix_A     - a pointer to matrix A
  *    matrix_B     - a pointer to matrix B
  *
- * -> RETURNS: a pointer to the result matrix structure, or a NULL ptr if
- *             matrix_A's column size differs from matrix_B's row size
+ * -> RETURNS: the result matrix, or a NULL ptr if matrix_A's column size
+ *             differs from matrix_B's row size
  ************************************************************************/
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_b);
 
@@ -153,15 +170,16 @@ Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_b);
  * Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag)
  *
  *  Calculates matrix addition or subtraction. The 'subtract' parameter serves
- *  as a boolean. Pass in a 0 for normal matrix addition and a 1 for matrix subtraction.
- *  This function returns a pointer to the beginning of a new 2D matrix.
+ *  as a boolean. Pass in a 0 for normal matrix addition and a 1 for matrix
+ *  subtraction. This function returns a pointer to the beginning of a new
+ *  2D matrix.
  *
  * -> PARAMETERS:
  *    matrixA       - a pointer to the beginning of matrix A
  *    matrixB       - a pointer to the beginning of matrix B
  *    subtract_flag - pass in a 0 for normal addition and a 1 for subtraction
  *
- * -> RETURNS: a pointer to the result matrix, or a NULL ptr if two matrices
+ * -> RETURNS: the result matrix, or a NULL ptr if two matrices
  *             differ in size.
  ************************************************************************/
 Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag);
@@ -171,6 +189,7 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag);
  *
  *  Calculates and returns the determinant of a matrix. The matrix is first
  *  put in triangular form i.e. :
+ *
  *      1 2 1
  *      0 2 0
  *      0 0 1
@@ -185,7 +204,7 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag);
  *        See: double Reduced_row_echelon_form(..)
  *
  * -> PARAMETERS:
- *    matrix                 - a pointer to the beginning of a 2D array
+ *    matrix                 - a matrix structure
  *    determinant_multiplier - a value that is multiplied to the diagonal
  *                             of a matrix in reduced row echelon form.
  *
@@ -200,7 +219,7 @@ double Determinant(Matrix matrix, double determinant_multiplier);
  *  within the matrix in index [i][j] swapped with [j][i].
  *
  * -> PARAMETERS:
- *    matrix       - a pointer to a matrix structure
+ *    matrix       - a matrix structure
  ************************************************************************/
 void Transpose(Matrix matrix);
 
@@ -226,7 +245,7 @@ void SwapValues(double *index_one, double *index_two);
  *  but the operation is performed on the entire column).
  *
  * -> PARAMETERS:
- *    matrix       - a pointer to a matrix structure
+ *    matrix       - a matrix structure
  ************************************************************************/
 void SwapColumns(Matrix matrix);
 
@@ -238,7 +257,7 @@ void SwapColumns(Matrix matrix);
  *  interchanging columns (by calling SwapColumns()).
  *
  * -> PARAMETERS:
- *    matrix      - a pointer to a matrix structure
+ *    matrix      - a matrix structure
  ************************************************************************/
 void RotateMatrixClockwise(Matrix matrix);
 
@@ -250,10 +269,9 @@ void RotateMatrixClockwise(Matrix matrix);
  *  interchange columns, then transpose.
  *
  * -> PARAMETERS:
- *    matrix       - a pointer to a matrix structure
+ *    matrix       - a matrix structure
  ************************************************************************/
 void RotateMatrixCounterClockwise(Matrix matrix);
-
 
 /*************************************************************************
  * int IsLinearIndependent(Matrix matrix)
@@ -262,11 +280,36 @@ void RotateMatrixCounterClockwise(Matrix matrix);
  *  independent if it's determinant is not equal to 0.
  *
  * -> PARAMETERS:
- *    matrix       - a pointer to a matrix structure
+ *    matrix       - a matrix structure
  *
  * -> RETURNS: 0 for false or 1 for true
  ************************************************************************/
 int IsLinearIndependent(Matrix matrix);
+
+/*************************************************************************
+ * int isSquare(Matrix matrix)
+ *
+ *  Determines if a matrix is square or not.
+ *
+ * -> PARAMETERS:
+ *    matrix       - a matrix structure
+ *
+ * -> RETURNS: 0 for false or 1 for true
+ ************************************************************************/
+int isSquare(Matrix matrix);
+
+/*************************************************************************
+ * int isEmpty(Matrix matrix)
+ *
+ *  Determines if a matrix is at least a 1x1 matrix or if it hasn't been
+ *  instantiated by calling NewMatrix (See NewMatrix()).
+ *
+ * -> PARAMETERS:
+ *    matrix       - a matrix structure
+ *
+ * -> RETURNS: 0 for false or 1 for true
+ ************************************************************************/
+int isEmpty(Matrix matrix);
 
 
 #endif //MATRIX_H

@@ -35,7 +35,7 @@ void FreeMatrix(Matrix *matrix){
 }
 
 void PrintMatrix(Matrix matrix){
-    if(matrix){
+    if(!isEmpty(matrix)){
         for(int i = 0;i < matrix->num_rows; i++){
             for(int j = 0; j < matrix->num_cols; j++)
                 printf("%0.1f ", matrix->index[i][j]);
@@ -50,7 +50,7 @@ void PrintMatrix(Matrix matrix){
  *******************************************************/
 Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
     // Makes sure matrices exist and dot product can be applied to the matrices
-    if(!matrix_A || !matrix_B || matrix_A->num_cols != matrix_B->num_rows) {
+    if(isEmpty(matrix_A) || isEmpty(matrix_B) || matrix_A->num_cols != matrix_B->num_rows) {
         fprintf(stderr, "%s", "Error - Need an NxN matrix to perform matrix multiplication");
         return NULL;
     }
@@ -72,7 +72,7 @@ Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B){
 
 Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag){
     // Makes sure matrices exists and are same size before performing addition
-    if(!matrix_A || !matrix_B || matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols) {
+    if(isEmpty(matrix_A) || isEmpty(matrix_B) || matrix_A->num_rows != matrix_B->num_rows || matrix_A->num_cols != matrix_B->num_cols) {
         fprintf(stderr, "%s", "Error - Need an NxN matrix to perform matrix addition");
         return NULL;
     }
@@ -97,7 +97,7 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag){
  *******************************************************/
 void RotateMatrixClockwise(Matrix matrix){
     // make sure matrix exists and is square
-    if(!matrix || matrix->num_rows != matrix->num_cols)
+    if(isEmpty(matrix) || !isSquare(matrix))
         fprintf(stderr, "%s", "Error - Need an Nxn matrix to rotate");
     else{
         Transpose(matrix);
@@ -107,7 +107,7 @@ void RotateMatrixClockwise(Matrix matrix){
 
 void RotateMatrixCounterClockwise(Matrix matrix){
     // make sure matrix exists and is square
-    if(!matrix || matrix->num_rows != matrix->num_cols)
+    if(isEmpty(matrix) || !isSquare(matrix))
         fprintf(stderr, "%s", "Error - Need an Nxn matrix to rotate");
     else{
         SwapColumns(matrix);
@@ -116,7 +116,7 @@ void RotateMatrixCounterClockwise(Matrix matrix){
 }
 
 void Transpose(Matrix matrix){
-    if(!matrix)
+    if(isEmpty(matrix))
         return;
     // Transpose NxN matrix
     for(int row = 0; row < matrix->num_rows; row++){
@@ -131,7 +131,7 @@ void Transpose(Matrix matrix){
  *******************************************************/
 double Determinant(Matrix matrix, double determinant_multiplier){
     // make sure matrix is square
-    if(matrix->num_rows != matrix->num_cols) {
+    if(isEmpty(matrix) || !isSquare(matrix)) {
         fprintf(stderr, "%s", "Error - Need an NxN matrix to calculate determinant");
         return -1;
     }
@@ -146,7 +146,7 @@ double Determinant(Matrix matrix, double determinant_multiplier){
  *         Matrix Decomposition Algorithms
  *******************************************************/
 double ReducedRowEchelonForm(Matrix matrix) {
-    if(!matrix)
+    if(isEmpty(matrix))
         return -1;
     int pivot = 0;
     // function keeps track of determinant multiplier in case user needs to calculate
@@ -178,8 +178,7 @@ double ReducedRowEchelonForm(Matrix matrix) {
 }
 
 void Cholesky(Matrix original_matrix, Matrix new_matrix){
-
-    if(!original_matrix || !new_matrix)
+    if(isEmpty(original_matrix)|| isEmpty(new_matrix))
         return;
     // loop over each row
     for(int i = 0; i < original_matrix->num_rows; i++){
@@ -237,12 +236,24 @@ void SwapValues(double *index_one, double *index_two){
     *index_two        = temp_value;
 }
 
+int isEmpty(Matrix matrix){
+    if(!matrix || matrix->num_rows <= 0 || matrix->num_cols <= 0)
+        return 1;
+    return 0;
+}
+
+int isSquare(Matrix matrix){
+    if(matrix->num_rows == matrix->num_cols)
+        return 1;
+    return 0;
+}
+
 
 /*******************************************************
  *           Miscellaneous Matrix operations
  *******************************************************/
 int IsLinearIndependent(Matrix matrix){
-    if(!matrix)
+    if(isEmpty(matrix))
         return -1;
     double multiplier = ReducedRowEchelonForm(matrix);
     // Linear independent matrices have a non-zero determinant
@@ -252,4 +263,26 @@ int IsLinearIndependent(Matrix matrix){
         return 1;
     }
     return 0;
+}
+
+Matrix SolveSystem(Matrix matrix){
+    if(isEmpty(matrix))
+        return NULL;
+
+    // Reduce system before solving for unknowns
+    ReducedRowEchelonForm(matrix);
+    Matrix result_matrix = NewMatrix(matrix->num_rows-1,1);
+
+    // Use back-substitution to solve reduced matrix
+    for(int i = matrix->num_rows-1; i >= 0; i--){
+
+        result_matrix->index[i][0] = matrix->index[i][matrix->num_rows-1];
+
+        for(int j = i+1; j < matrix->num_rows; j++)
+            result_matrix->index[i][0] = matrix->index[i][j] * result_matrix->index[j][0];
+
+        result_matrix->index[i][0] /= matrix->index[i][i];
+    }
+
+    return result_matrix;
 }
