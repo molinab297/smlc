@@ -18,19 +18,17 @@ Output:
 
 *insert pic here*
 
-## Includes common and well known matrix algorithms such as:
+## Current supported matrix operations:
   - basic matrix addition, subtraction, and multiplication
   - rotating and transposing matrices (only NxN matrices at the moment)
   - calculating determinants of matrices
   - converting matrices to reduced row echelon form
+      - LU Decomposition (Guassian Elimination/Reduced row)
+      - Cholesky Decomposition
   - solving systems of equations as matrices (using backward substitution)
   - determining linear independence/dependence 
   - calculating eigenvectors & eigenvalues 
   
-## Supported Decomposition Algorithms at the moment:   
-  - LU Decomposition (Guassian Elimination/Reduced row)
-  - Cholesky Decomposition
-
   
 ### Cholesky Decomposition 
 When it is applicable, the Cholesky decomposition is roughly twice as efficient as the LU decomposition for solving systems of linear equations. 
