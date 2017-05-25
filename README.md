@@ -6,9 +6,9 @@ For example, given this system of equations:
 
 ![Alt text](https://cloud.githubusercontent.com/assets/10769110/26473871/a532fc6c-4162-11e7-929a-f7f463d9e15e.gif)
 
-we could simply solve this system by writing the following code
+We could simply solve this system by writing the following code:
 
-```ruby
+```c
 Matrix matrix = NewMatrix(3,4);
 FillMatrix(matrix);
 PrintMatrix(SolveSystem(matrix));
@@ -21,7 +21,46 @@ Output:
 3.0 
 ```
 
-*insert pic here*
+Example 2). Say we wanted to find the determinant of the following 5x5 matrix. 
+
+This can be achieved via the following lines:
+```c
+Matrix matrix = NewMatrix(5,5);
+FillMatrix(matrix);
+double determinant_multiplier = ReducedRowEchelonForm(matrix);
+printf("%lf", Determinant(matrix,determinant_multiplier));
+```
+
+Output:
+```c
+output here
+```
+
+Example 3). Say we wanted to find the Chelosky factor of the following Hermitian, positive-definite matrix:
+*add*
+
+We can achieve this by writing the following lines:
+```c
+Matrix matrix = NewMatrix(5,5);
+FillMatrix(matrix);
+Matrix result_matrix = Cholesky(matrix);
+PrintMatrix(result_matrix);
+```c
+
+Output:
+```c
+2.449  0.000 0.000 0.000 
+1.225  2.121 0.000 0.000 
+1.633  1.414 2.309 0.000 
+3.266 -1.414 1.588 3.132 
+```
+
+More about the Chelosky decomposition algorithm can be seen at the bottom of this page.
+
+Although, because we are dealing with C, don't forget to free memory from your declared matrices after you are done using them. This can achieved by the following line:
+```c
+FreeMatrix(matrix);
+```
 
 ## Current supported matrix operations:
   - basic matrix addition, subtraction, and multiplication
