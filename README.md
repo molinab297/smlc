@@ -2,7 +2,10 @@
 
 A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. Being that C can at times be a very verbose and terse language, the intention behind this project is allow programmers to quickly and easily be able to create and manipulate matrices dynamically without having to manually create dynamic 2D arrays and deal with pointers.
 
-For example, given this system of equations:
+## Code Examples
+
+Example 1).
+Given this system of equations:
 
 ![Alt text](https://cloud.githubusercontent.com/assets/10769110/26473871/a532fc6c-4162-11e7-929a-f7f463d9e15e.gif)
 
@@ -21,7 +24,9 @@ Output:
 3.0 
 ```
 
-Example 2). Say we wanted to find the determinant of the following 5x5 matrix. 
+Example 2). Say we wanted to find the determinant of the following 5x5 matrix:
+
+
 
 This can be achieved via the following lines:
 ```c
@@ -37,7 +42,8 @@ output here
 ```
 
 Example 3). Say we wanted to find the Chelosky factor of the following Hermitian, positive-definite matrix:
-*add*
+
+![Alt text](https://cloud.githubusercontent.com/assets/10769110/26475112/56124c16-416a-11e7-9242-de7b947002ec.png)
 
 We can achieve this by writing the following lines:
 ```c
@@ -45,7 +51,7 @@ Matrix matrix = NewMatrix(5,5);
 FillMatrix(matrix);
 Matrix result_matrix = Cholesky(matrix);
 PrintMatrix(result_matrix);
-```c
+```
 
 Output:
 ```c
