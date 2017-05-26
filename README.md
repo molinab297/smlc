@@ -2,6 +2,7 @@
 
 A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. Being that C can at times be a very verbose and terse language, the intention behind this project is allow programmers to quickly and easily be able to create and manipulate matrices dynamically without having to manually create dynamic 2D arrays and deal with pointers.
 
+
 ## Current supported matrix operations:
   - basic matrix addition, subtraction, and multiplication
   - rotating and transposing matrices (only NxN matrices at the moment)
@@ -12,6 +13,7 @@ A very small and basic matrix library written in C. This library is purely writt
   - solving systems of equations as matrices (using backward substitution)
   - determining linear independence/dependence 
   - calculating eigenvectors & eigenvalues
+
 
 ## Code Examples
 
@@ -77,6 +79,7 @@ Although, because we are dealing with C, don't forget to free memory from your d
 ```c
 FreeMatrix(matrix);
 ``` 
+  
   
 ### Cholesky Decomposition 
 When it is applicable, the Cholesky decomposition is roughly twice as efficient as the LU decomposition for solving systems of linear equations. 
