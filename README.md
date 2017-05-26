@@ -28,6 +28,7 @@ Matrix matrix = NewMatrix(3,4);
 FillMatrix(matrix);
 PrintMatrix(SolveSystem(matrix));
 ```
+where 3 is the number of rows and 4 is the number of columns for the matrix.
 
 Output:
 ```c
