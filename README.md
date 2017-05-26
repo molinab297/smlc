@@ -53,7 +53,7 @@ Output:
 
 Example 3). Say we wanted to find the Chelosky factor of the following Hermitian, positive-definite matrix:
 
-![Alt text](https://cloud.githubusercontent.com/assets/10769110/26475112/56124c16-416a-11e7-9242-de7b947002ec.png)
+![Alt text](https://cloud.githubusercontent.com/assets/10769110/26476280/85b21e3a-4172-11e7-95e9-ee6263ac0ebb.png)
 
 We can achieve this by writing the following lines:
 ```c
