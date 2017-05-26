@@ -36,7 +36,7 @@ Output:
 
 Example 2). Say we wanted to find the determinant of the following 5x5 matrix:
 
-![Alt text](https://cloud.githubusercontent.com/assets/10769110/26476201/f5168708-4171-11e7-9304-eb566f950ed7.png)
+![Alt text](https://cloud.githubusercontent.com/assets/10769110/26476253/50f56184-4172-11e7-87ac-b73d8bd819e6.png)
 
 This can be achieved via the following lines:
 ```c
