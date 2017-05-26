@@ -23,14 +23,25 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols){
     return newMatrix;
 }
 
-void FreeMatrix(Matrix *matrix){
-    if(!isEmpty(*matrix)){
+void FreeMatrix(Matrix *matrix) {
+    if (!isEmpty(*matrix)) {
         // free memory from 2d array within matrix struct
-        for(int i = 0; i < (*matrix)->num_rows; i++)
+        for (int i = 0; i < (*matrix)->num_rows; i++)
             free((*matrix)->index[i]);
         free((*matrix)->index);
         // free memory from matrix struct
         free(*matrix);
+        *matrix = NULL;
+    }
+}
+
+void PrintMatrix(Matrix matrix) {
+    if (!isEmpty(matrix)) {
+        for (int i = 0; i < matrix->num_rows; i++) {
+            for (int j = 0; j < matrix->num_cols; j++)
+                printf("%0.3f ", matrix->index[i][j]);
+            printf("\n");
+        }
     }
 }
 
@@ -140,7 +151,7 @@ double ReducedRowEchelonForm(Matrix matrix) {
     int pivot = 0;
     // function keeps track of determinant multiplier in case user needs to calculate
     // determinant value.
-    int determinant_multiplier = 1;
+    double determinant_multiplier = 1;
     for(int row = 0; row < matrix->num_rows; row++) {
         if (pivot > matrix->num_cols-1)
             return determinant_multiplier;
@@ -166,11 +177,12 @@ double ReducedRowEchelonForm(Matrix matrix) {
     return determinant_multiplier;
 }
 
-void Cholesky(Matrix original_matrix, Matrix new_matrix){
-    if(isEmpty(original_matrix)|| isEmpty(new_matrix))
-        return;
+Matrix Cholesky(Matrix matrix){
+    if(isEmpty(matrix))
+        return NULL;
+    Matrix new_matrix = NewMatrix(matrix->num_rows, matrix->num_cols);
     // loop over each row
-    for(int i = 0; i < original_matrix->num_rows; i++){
+    for(int i = 0; i < matrix->num_rows; i++){
         double temp_for_diag = 0;
         // calculate non-diagonal value
         for(int j = 0; j < i; j++){
@@ -178,12 +190,13 @@ void Cholesky(Matrix original_matrix, Matrix new_matrix){
             for(int k = 0; k < j; k++)
                 // calculate non-diagonal value
                 temp_for_non_diag += (new_matrix->index[i][k] * new_matrix->index[j][k]);
-            new_matrix->index[i][j] = (1.0/new_matrix->index[j][j])*(original_matrix->index[i][j] - temp_for_non_diag);
+            new_matrix->index[i][j] = (1.0/new_matrix->index[j][j])*(matrix->index[i][j] - temp_for_non_diag);
             temp_for_diag += (pow(new_matrix->index[i][j], 2.0));
         }
         // calculate diagonal value
-        new_matrix->index[i][i] = sqrt(original_matrix->index[i][i] - temp_for_diag);
+        new_matrix->index[i][i] = sqrt(matrix->index[i][i] - temp_for_diag);
     }
+    return new_matrix;
 }
 
 
@@ -270,20 +283,21 @@ Matrix SolveSystem(Matrix matrix){
     // Use back-substitution to solve reduced matrix
     for(int i = matrix->num_rows-1; i >= 0; i--){
 
-        // if the unknown variable has a non-zero coefficient, then a value for it must exist
-        if(matrix->index[i][i] != 0) {
-            result_matrix->index[i][0] = matrix->index[i][matrix->num_cols-1];
-
-            for(int j = i+1; j < matrix->num_rows; j++)
-                result_matrix->index[i][0] = matrix->index[i][j] * result_matrix->index[j][0];
-
-            result_matrix->index[i][0] /= matrix->index[i][i]; // cause of nan
-        }
-        // The matrix has no solutions if there is a zero row and then a non-zero value in
-        // the constant vector
-        else if(matrix->index[i][i] == 0 && matrix->index[i][matrix->num_cols-1] != 0){
+        // The matrix has no solutions if it's inconsistent
+        if(matrix->index[i][i] == 0 && matrix->index[i][matrix->num_cols-1] != 0){
             fprintf(stderr,"%s","No solutions");
             return NULL;
+        }
+        // if the unknown variable has a non-zero coefficient, then a value for it must exist
+        else if(matrix->index[i][i] != 0) {
+            result_matrix->index[i][0] = matrix->index[i][matrix->num_cols-1];
+
+            for(int j = i+1; j < matrix->num_rows; j++) {
+                if(matrix->index[i][j] != 0)
+                    result_matrix->index[i][0] = matrix->index[i][j] * result_matrix->index[j][0];
+            }
+
+            result_matrix->index[i][0] /= matrix->index[i][i]; // cause of nan
         }
         // The matrix has infinitely many solutions if a zero row exists
         else{

@@ -46,6 +46,16 @@ Matrix NewMatrix(size_t num_rows, size_t num_cols);
 void FreeMatrix(Matrix *matrix);
 
 /*************************************************************************
+ * void PrintMatrix(Matrix matrix)
+ *
+ *  Prints the contents of a matrix structure
+ *
+ * -> PARAMETERS:
+ *    matrix   - a pointer to a matrix structure
+ ************************************************************************/
+void PrintMatrix(Matrix matrix);
+
+/*************************************************************************
  * void SwapRows(Matrix matrix, int rowA, int rowB)
  *
  *  Swaps one row with another. This operation is typically performed when
@@ -133,17 +143,15 @@ Matrix SolveSystem(Matrix matrix);
  *   decomposition for solving systems of linear equations.
  *
  * -> PARAMETERS:
- *    original_matrix  - the original matrix structure
- *    new_matrix       - the new matrix structure which will receive the
- *                       Cholesky factor
+ *    matrix  - a matrix structure
  *
  * -> RETURNS:
  *
- *    NOTE: The parameter original_matrix must be a Hermitian, positive-definite
+ *    NOTE: The parameter matrix must be a Hermitian, positive-definite
  *    matrix (Symmetric and real for all values), in order for the algorithm
  *    to perform as designed.
  ************************************************************************/
-void Cholesky(Matrix original_matrix, Matrix new_matrix);
+Matrix Cholesky(Matrix matrix);
 
 /*************************************************************************
  * Matrix MultiplyMatrices(Matrix matrix_A, Matrix matrix_B)

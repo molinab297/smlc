@@ -15,21 +15,8 @@ void FillMatrix(Matrix matrix){
     }
 }
 
-void PrintMatrix(Matrix matrix){
-    if(!isEmpty(matrix)){
-        for(int i = 0;i < matrix->num_rows; i++){
-            for(int j = 0; j < matrix->num_cols; j++)
-                printf("%0.1f ", matrix->index[i][j]);
-            printf("\n");
-        }
-    }
-}
-
 int main()
 {
-
-    Matrix matrix = NewMatrix(4,3);
-    Determinant(matrix, 1);
 
 
     return 0;
