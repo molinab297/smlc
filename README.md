@@ -28,7 +28,18 @@ Matrix matrix = NewMatrix(3,4);
 FillMatrix(matrix);
 PrintMatrix(SolveSystem(matrix));
 ```
-where 3 is the number of rows and 4 is the number of columns for the matrix.
+where FillMatrix() is a function that allows you to enter matrix values from the console:
+```c
+void FillMatrix(Matrix matrix){
+    for(int i = 0; i < matrix->num_rows; i++){
+        for(int j = 0; j < matrix->num_cols; j++){
+            printf("Enter value for [%d,%d]: ", i, j);
+            scanf("%lf", (*(matrix->index+i)+j));
+        }
+    }
+}
+```
+
 
 Output:
 ```c

@@ -12,7 +12,7 @@
 #include <math.h>
 
 typedef struct{
-    double **index; // pointer to 2d matrix
+    double **index;  // pointer to 2D array of matrix values
     size_t num_rows;
     size_t num_cols;
 }matrix_struct;
