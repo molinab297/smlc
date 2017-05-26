@@ -36,6 +36,7 @@ Output:
 3.0 
 ```
 
+
 Example 2). Say we wanted to find the determinant of the following 5x5 matrix:
 
 ![Alt text](https://cloud.githubusercontent.com/assets/10769110/26476253/50f56184-4172-11e7-87ac-b73d8bd819e6.png)
@@ -54,6 +55,8 @@ Output:
 ```
 
 Note that ReducedRowEchelonForm() and Determinant() both return doubles (as fractions are common in matrices), so it is absolutely necessary to pass the "%lf" flag in the printf function in order to produce the correct output. 
+
+
 
 Example 3). Say we wanted to find the Chelosky factor of the following Hermitian, positive-definite matrix:
 
