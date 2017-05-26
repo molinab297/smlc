@@ -22,7 +22,7 @@ Given this system of equations:
 
 ![Alt text](https://cloud.githubusercontent.com/assets/10769110/26473871/a532fc6c-4162-11e7-929a-f7f463d9e15e.gif)
 
-We could simply solve this system by writing the following code:
+We can solve this system by writing the following code:
 ```c
 Matrix matrix = NewMatrix(3,4);
 FillMatrix(matrix);
