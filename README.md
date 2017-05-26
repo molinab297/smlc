@@ -83,7 +83,7 @@ More about the Chelosky decomposition algorithm can be seen at the bottom of thi
 However, because this is C, calling the matrix library function Free() is necessary in order to prevent memory leakage.
 This can achieved by the following line:
 ```c
-FreeMatrix(matrix);
+FreeMatrix(&matrix);
 ``` 
   
   
