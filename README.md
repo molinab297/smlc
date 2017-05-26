@@ -57,8 +57,7 @@ This can be achieved via the following lines:
 ```c
 Matrix matrix = NewMatrix(5,5);
 FillMatrix(matrix);
-double determinant_multiplier = ReducedRowEchelonForm(matrix);
-printf("%lf", Determinant(matrix,determinant_multiplier));
+printf("%lf", Determinant(matrix));
 ```
 
 Output:
