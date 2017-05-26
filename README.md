@@ -65,7 +65,7 @@ Output:
 -997.00000
 ```
 
-Note that ReducedRowEchelonForm() and Determinant() both return doubles (as fractions are common in matrices), so it is absolutely necessary to pass the "%lf" flag in the printf function in order to produce the correct output. 
+Note that Determinant() returns a double (as fractions are common in matrices), so it is necessary to pass the "%lf" flag in the printf function in order to produce the correct output. 
 
 
 
