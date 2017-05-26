@@ -1,21 +1,21 @@
 # smlc - A Simple Matrix Library written in C
 
-A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. Being that C can at times be a very verbose and terse language, the intention behind this project is allow programmers to quickly and easily be able to create and manipulate matrices dynamically without having to manually create dynamic 2D arrays and deal with pointers.
+A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. Being that the C programming language can at times involve writing very verbose and terse code, the intention behind this project is allow programmers to quickly and easily be able to create and manipulate matrices without having to deal with manual dynamic 2D array allocation and pointers.
 
 
-## Current supported matrix operations:
-  - basic matrix addition, subtraction, and multiplication
-  - rotating and transposing matrices (only NxN matrices at the moment)
+## Current Supported Matrix Operations
+  - matrix addition, subtraction, and multiplication
+  - rotating and transposing for NxN matrices
   - calculating determinants of matrices
   - converting matrices to reduced row echelon form
       - LU Decomposition (Guassian Elimination/Reduced row)
       - Cholesky Decomposition
   - solving systems of equations as matrices (using backward substitution)
   - determining linear independence/dependence 
-  - calculating eigenvectors & eigenvalues
+  - calculating eigenvectors & eigenvalues (will soon be added)
 
 
-## Code Examples
+## Using the Library - Code Examples
 
 Example 1).
 Given this system of equations:
@@ -53,6 +53,8 @@ Output:
 -997.00000
 ```
 
+Note that ReducedRowEchelonForm() and Determinant() both return doubles (as fractions are common in matrices), so it is absolutely necessary to pass the "%lf" flag in the printf function in order to produce the correct output. 
+
 Example 3). Say we wanted to find the Chelosky factor of the following Hermitian, positive-definite matrix:
 
 ![Alt text](https://cloud.githubusercontent.com/assets/10769110/26476280/85b21e3a-4172-11e7-95e9-ee6263ac0ebb.png)
@@ -75,7 +77,8 @@ Output:
 
 More about the Chelosky decomposition algorithm can be seen at the bottom of this page.
 
-Although, because we are dealing with C, don't forget to free memory from your declared matrices after you are done using them. This can achieved by the following line:
+However, because this is C, calling the matrix library function Free() is necessary in order to prevent memory leakage.
+This can achieved by the following line:
 ```c
 FreeMatrix(matrix);
 ``` 
