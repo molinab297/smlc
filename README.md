@@ -1,6 +1,6 @@
 # smlc - A Simple Matrix Library written in C
 
-A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. Being that the C programming language can at times involve writing very verbose and terse code, the intention behind this project is to allow programmers to quickly and easily be able to create and manipulate matrices without having to deal with manual dynamic 2D array allocation and pointers.
+A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. Being that the C programming language can at times involve writing very verbose and terse code, the intention behind this project is to allow programmers to quickly and easily be able to create and manipulate matrices without having to manually deal with dynamic 2D array allocation.
 
 
 ## Current Supported Matrix Operations
@@ -57,8 +57,7 @@ This can be achieved via the following lines:
 ```c
 Matrix matrix = NewMatrix(5,5);
 FillMatrix(matrix);
-double determinant_multiplier = ReducedRowEchelonForm(matrix);
-printf("%lf", Determinant(matrix,determinant_multiplier));
+printf("%lf", Determinant(matrix));
 ```
 
 Output:
@@ -66,7 +65,7 @@ Output:
 -997.00000
 ```
 
-Note that ReducedRowEchelonForm() and Determinant() both return doubles (as fractions are common in matrices), so it is absolutely necessary to pass the "%lf" flag in the printf function in order to produce the correct output. 
+Note that Determinant() returns a double (as fractions are common in matrices), so it is necessary to pass the "%lf" flag in the printf function in order to produce the correct output. 
 
 
 
