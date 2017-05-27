@@ -17,10 +17,6 @@ void FillMatrix(Matrix matrix){
 
 int main()
 {
-    int size;
-    scanf("%d", &size);
-    int ar[size];
-    Matrix m;
 
 
 

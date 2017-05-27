@@ -199,20 +199,16 @@ Matrix AddMatrices(Matrix matrix_A, Matrix matrix_B, int subtract_flag);
  *  The product of the diagonal and the determinant multiplier is the
  *  determinant of the matrix.
  *
- *  NOTE: The matrix must already be in reduced row echelon form before
- *        the determinant is calculated, otherwise the resulting determinant
- *        will be an unexpected value. This is because the matrix needs to be
- *        in upper triangle form, which RREF achieves.
+ *  NOTE: matrix will be converted to reduced row echelon form. This is
+ *        because the matrix needs to be in upper triangle form.
  *        See: double Reduced_row_echelon_form(..)
  *
  * -> PARAMETERS:
  *    matrix                 - a matrix structure
- *    determinant_multiplier - a value that is multiplied to the diagonal
- *                             of a matrix in reduced row echelon form.
  *
  * -> RETURNS: the decimal value of the matrix determinant
  ************************************************************************/
-double Determinant(Matrix matrix, double determinant_multiplier);
+double Determinant(Matrix matrix);
 
 /*************************************************************************
  * void Transpose(Matrix matrix_A)

@@ -129,12 +129,13 @@ void Transpose(Matrix matrix){
 /*******************************************************
  *                Matrix Determinants
  *******************************************************/
-double Determinant(Matrix matrix, double determinant_multiplier){
+double Determinant(Matrix matrix){
     // make sure matrix is square
     if(isEmpty(matrix) || !isSquare(matrix)) {
         fprintf(stderr, "%s", "Error - Need an NxN matrix to calculate determinant");
         return -1;
     }
+    double determinant_multiplier = ReducedRowEchelonForm(matrix);
     int determinant = 1;
     for(int i = 0; i < matrix->num_rows; i++) // multiply diagonal
         determinant *= matrix->index[i][i];
@@ -257,9 +258,8 @@ int isSquare(Matrix matrix){
 int IsLinearIndependent(Matrix matrix){
     if(isEmpty(matrix))
         return -1;
-    double multiplier = ReducedRowEchelonForm(matrix);
     // Linear independent matrices have a non-zero determinant
-    double determinant = Determinant(matrix,multiplier);
+    double determinant = Determinant(matrix);
     if(determinant != 0)
         return 1;
     return 0;
