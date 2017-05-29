@@ -12,8 +12,8 @@ A very small and basic matrix library written in C. This library is purely writt
       - Cholesky Decomposition
   - solving systems of equations as matrices (using backward substitution)
   - determining linear independence/dependence 
-  - calculating eigenvectors & eigenvalues (will soon be added)
-
+  - calculating eigenvalues and eigenvectors
+      - uses power method to find largest eigenvalue and largest eigenvector
 
 ## Using the Library - Code Examples
 
