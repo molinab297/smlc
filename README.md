@@ -1,7 +1,6 @@
 # smlc - A Simple Matrix Library written in C
 
-A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries. The intention behind this project is to allow programmers to quickly and easily be able to create and manipulate matrices without having to manually deal with dynamic 2D array allocation.
-
+A very small and basic matrix library written in C. This library is purely written for interest in linear algebra/C programming and is not intended to compete in performance with other well known C/C++ matrix libraries.
 
 ## Current Supported Matrix Operations
   - matrix addition, subtraction, and multiplication
@@ -12,8 +11,6 @@ A very small and basic matrix library written in C. This library is purely writt
       - Cholesky Decomposition
   - solving systems of equations as matrices (using backward substitution)
   - determining linear independence/dependence 
-  - calculating eigenvalues and eigenvectors
-      - uses power method to find largest eigenvalue and largest eigenvector
 
 ## Using the Library - Code Examples
 
