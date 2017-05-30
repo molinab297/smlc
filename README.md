@@ -60,10 +60,7 @@ printf("%lf", Determinant(matrix));
 Output:
 ```c
 -997.00000
-```
-
-Note that Determinant() returns a double (as fractions are common in matrices), so it is necessary to pass the "%lf" flag in the printf function in order to produce the correct output. 
-
+``` 
 
 
 Example 3). Say we wanted to find the Chelosky factor of the following Hermitian, positive-definite matrix:
@@ -88,7 +85,7 @@ Output:
 
 More about the Chelosky decomposition algorithm can be seen at the bottom of this page.
 
-However, because this is C, calling the matrix library function Free() is necessary in order to prevent memory leakage.
+Make sure to use the matrix library function Free() in order to prevent memory leaks.
 This can be achieved by the following line:
 ```c
 FreeMatrix(&matrix);
