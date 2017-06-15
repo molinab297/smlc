@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+
 typedef struct{
     double **index;  // pointer to 2D array of matrix values
     size_t num_rows;
@@ -308,6 +309,7 @@ int isSquare(Matrix matrix);
  * -> RETURNS: 0 for false or 1 for true
  ************************************************************************/
 int isEmpty(Matrix matrix);
+
 
 
 #endif //MATRIX_H
